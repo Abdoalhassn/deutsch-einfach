@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch einfach mit Abdo Al-Hassan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<script>
+// ===== الإعدادات — عدّل هنا مباشرة =====
+const CONFIG = {
+  GEMINI_KEY: '',        // ← ضع مفتاح Gemini هنا
+  SUPABASE_URL: 'https://ouvhvfbzkfqicdkyvywj.supabase.co',
+  SUPABASE_KEY: '',      // ← ضع Supabase Anon Key هنا
+  GOOGLE_DRIVE_KEY: '',  // ← ضع Google Drive API Key هنا
+  DRIVE_FOLDER_ID: '1OPZh8X6hq-arYpKncGc50_5gzdHdKk1r',
+};
+// ==========================================
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --gold:#C8960C;--gold-light:#E0AA20;--gold-dark:#A07810;
+  --navy:#ffffff;--navy2:#f8f9fa;--navy3:#f0f2f5;--navy4:#e8edf5;
+  --text:#1a2332;--text2:#4a5568;--text3:#718096;
+  --border:#e2e8f0;--border2:#cbd5e0;
+  --card:#ffffff;--card2:#f8f9fa;
+  --success:#16a34a;--danger:#dc2626;--warning:#d97706;
+  --rad:12px;--rad-lg:20px;
+  --transition:0.25s cubic-bezier(0.4,0,0.2,1);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Cairo',sans-serif;background:#f0f2f5;color:var(--text);display:flex;flex-direction:column}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+#app{display:flex;flex-direction:column;height:100vh;width:100%;position:relative;overflow:hidden;background:#f0f2f5}
+
+/* HEADER */
+.app-header{background:linear-gradient(135deg,#1a2840,#2c3e6a);border-bottom:none;padding:14px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:space-between;position:relative;z-index:50;flex-shrink:0}
+.header-logo{display:flex;align-items:center;gap:10px}
+.flag{display:flex;flex-direction:column;width:32px;height:22px;border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,0.15);flex-shrink:0}
+.flag span{flex:1}
+.logo-text{font-size:22px;font-weight:900;color:var(--gold)}
+.logo-sub{font-size:15px;color:var(--text3)}
+.header-right{display:flex;align-items:center;gap:8px}
+.stat-pill{display:flex;align-items:center;gap:4px;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.25);border-radius:20px;padding:4px 10px;font-size:17px;color:var(--gold)}
+
+/* BOTTOM NAV */
+.bottom-nav{display:flex;background:#ffffff;border-top:1px solid var(--border);flex-shrink:0;box-shadow:0 -2px 12px rgba(0,0,0,0.08);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 4px;gap:5px;cursor:pointer;transition:var(--transition);border:none;background:none;color:var(--text3);font-family:'Cairo',sans-serif;position:relative}
+.nav-item.active{color:var(--gold)}
+.nav-item.active::before{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;background:var(--gold);border-radius:0 0 3px 3px}
+.nav-icon{font-size:24px;line-height:1}
+.nav-label{font-size:15px;font-weight:500}
+
+/* PAGES */
+.page{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:8px}
+.page.active{display:flex;flex-direction:column;animation:fadeIn 0.25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION PAGES */
+.section-page{display:none;flex-direction:column;position:absolute;top:0;left:0;right:0;bottom:0;background:#f0f2f5;z-index:40;overflow:hidden}
+.section-page.active{display:flex;animation:slideIn 0.3s ease}
+@keyframes slideIn{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+.section-top{background:#ffffff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.back-btn{width:48px;height:48px;border-radius:50%;background:var(--border);border:1px solid var(--border2);color:var(--text2);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition)}
+.back-btn:hover{background:var(--border2);color:var(--text)}
+.section-top-info{flex:1}
+.section-top-name{font-size:19px;font-weight:700;color:var(--text)}
+.section-top-sub{font-size:16px;color:var(--text3)}
+.section-content{flex:1;overflow-y:auto;padding:16px}
+
+/* HOME */
+.home-hero{background:linear-gradient(160deg,#1a2840,#2c3e6a,#1a5c8a);padding:20px 16px;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;top:-40px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(212,160,23,0.08),transparent 70%);pointer-events:none}
+.hero-level{display:inline-flex;align-items:center;gap:6px;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.3);border-radius:20px;padding:4px 12px;font-size:17px;color:var(--gold);font-weight:600;margin-bottom:12px}
+.hero-title{font-size:26px;font-weight:900;margin-bottom:4px;color:#ffffff}
+.hero-sub{font-size:18px;color:rgba(255,255,255,0.8);margin-bottom:16px}
+.progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));border-radius:4px;position:relative;overflow:hidden}
+.progress-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);animation:shimmer 2s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.continue-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#1a1200;font-size:19px;font-weight:700;font-family:'Cairo',sans-serif;border:none;border-radius:var(--rad);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:var(--transition);box-shadow:0 4px 16px rgba(212,160,23,0.3);margin-top:16px}
+.continue-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,160,23,0.4)}
+
+.quick-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px}
+.stat-card{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad);padding:16px 10px;text-align:center}
+.stat-card .val{font-size:26px;font-weight:900;color:var(--gold);line-height:1}
+.stat-card .lbl{font-size:15px;color:var(--text3);margin-top:2px}
+
+.section-title{font-size:19px;font-weight:700;color:var(--text2);padding:12px 16px 8px;display:flex;align-items:center;gap:6px}
+.smart-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 12px}
+.smart-card{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad);padding:12px;cursor:pointer;transition:var(--transition)}
+.smart-card:hover{border-color:var(--border2);background:var(--card2)}
+.smart-card .sc-icon{font-size:26px;margin-bottom:6px}
+.smart-card .sc-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:2px}
+.smart-card .sc-sub{font-size:16px;color:var(--text3)}
+.smart-card.accent{border-color:rgba(212,160,23,0.3);background:rgba(212,160,23,0.05)}
+.smart-card.accent .sc-title{color:var(--gold)}
+
+.activity-wrap{padding:0 16px 16px}
+.activity-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:6px}
+.activity-day{aspect-ratio:1;border-radius:3px;background:var(--border)}
+.activity-day.done{background:var(--gold-dark)}
+.activity-day.today{background:var(--gold);box-shadow:0 0 6px rgba(212,160,23,0.5)}
+
+/* LEVELS */
+.levels-header{padding:16px 24px;background:#ffffff;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.levels-header h2{font-size:22px;font-weight:700}
+.levels-header p{font-size:17px;color:var(--text3);margin-top:2px}
+
+.level-card{margin:12px 16px 0;background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06);border-radius:var(--rad-lg);overflow:hidden;cursor:pointer;transition:var(--transition)}
+.level-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.level-card:last-child{margin-bottom:12px}
+.level-header-row{padding:16px;display:flex;align-items:center;gap:12px}
+.level-badge{width:66px;height:66px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex-shrink:0}
+.level-badge.a1{background:linear-gradient(135deg,#1a6b3a,#22c55e);color:#fff}
+.level-badge.a2{background:linear-gradient(135deg,#1d4ed8,#60a5fa);color:#fff}
+.level-badge.b1{background:linear-gradient(135deg,#92400e,#f59e0b);color:#fff}
+.level-badge.b2{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff}
+.level-badge.locked{background:var(--border);color:var(--text3)}
+.level-info{flex:1}
+.level-name{font-size:20px;font-weight:700}
+.level-desc{font-size:17px;color:var(--text3);margin-top:1px}
+.level-progress-wrap{padding:0 16px 12px}
+.level-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px}
+.level-progress-fill{height:100%;border-radius:3px}
+.fill-green{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.fill-blue{background:linear-gradient(90deg,#1d4ed8,#60a5fa)}
+.fill-amber{background:linear-gradient(90deg,#92400e,#f59e0b)}
+.fill-purple{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.level-lessons{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 16px}
+.lesson-dot{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;cursor:pointer;transition:var(--transition)}
+.lesson-dot.done{background:var(--success);color:#fff}
+.lesson-dot.active-lesson{background:var(--gold);color:#1a1200;box-shadow:0 0 10px rgba(212,160,23,0.4)}
+.lesson-dot.locked{background:var(--border);color:var(--text3);cursor:not-allowed}
+
+/* LESSON */
+.lesson-header{background:linear-gradient(135deg,#1a2840,#2c3e6a);padding:16px;border-bottom:none;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.lesson-back{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--text2);font-family:'Cairo',sans-serif;font-size:18px;cursor:pointer;margin-bottom:10px}
+.lesson-title{font-size:22px;font-weight:900}
+.lesson-sub{font-size:17px;color:var(--text3);margin-top:2px}
+.lesson-progress-dots{display:flex;gap:4px;margin-top:12px}
+.lp-dot{flex:1;height:4px;border-radius:2px;background:var(--border);transition:var(--transition)}
+.lp-dot.done{background:var(--success)}
+.lp-dot.active{background:var(--gold)}
+
+.sections-list{padding:12px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;flex:1}
+.section-item{background:#ffffff;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.05);border-radius:var(--rad);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:var(--transition)}
+.section-item:hover{border-color:var(--border2);background:var(--card2)}
+.section-item.active-section{border-color:rgba(212,160,23,0.4);background:rgba(212,160,23,0.06)}
+.section-item.completed-section{border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.04)}
+.section-item.locked-section{opacity:0.5;cursor:not-allowed}
+.si-icon{width:58px;height:58px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.si-icon.vocab{background:rgba(212,160,23,0.15)}
+.si-icon.grammar{background:rgba(37,99,235,0.15)}
+.si-icon.reading{background:rgba(16,163,74,0.15)}
+.si-icon.listening{background:rgba(168,85,247,0.15)}
+.si-icon.writing{background:rgba(239,68,68,0.15)}
+.si-icon.speaking{background:rgba(20,184,166,0.15)}
+.si-icon.exam{background:rgba(245,158,11,0.15)}
+.si-info{flex:1}
+.si-name{font-size:19px;font-weight:700}
+.si-desc{font-size:16px;color:var(--text3);margin-top:2px}
+.si-badge{font-size:16px;padding:2px 8px;border-radius:10px}
+.si-badge.done{background:rgba(34,197,94,0.15);color:var(--success)}
+.si-badge.inprogress{background:rgba(212,160,23,0.15);color:var(--gold)}
+.si-badge.locked{background:var(--border);color:var(--text3)}
+
+/* VOCAB */
+.vocab-progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.vocab-counter{font-size:18px;color:var(--text2)}
+.vocab-counter span{color:var(--gold);font-weight:700}
+.mode-btns{display:flex;gap:6px}
+.mode-btn{padding:4px 12px;border-radius:20px;font-size:16px;font-weight:600;border:1px solid var(--border2);background:none;color:var(--text3);cursor:pointer;font-family:'Cairo',sans-serif;transition:var(--transition)}
+.mode-btn.active{background:var(--gold);color:#1a1200;border-color:var(--gold)}
+
+.vocab-card{background:linear-gradient(135deg,#ffffff,#f8f9fa);border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.08);border-radius:var(--rad-lg);padding:24px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+.vocab-german{font-size:36px;font-weight:900;color:var(--gold);margin-bottom:4px;direction:ltr}
+.vocab-type{font-size:16px;color:var(--text3);margin-bottom:10px;font-style:italic;direction:ltr}
+.vocab-arabic{font-size:24px;font-weight:700;margin-bottom:10px}
+.vocab-sentence{font-size:18px;color:var(--text2);background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;margin-bottom:14px;direction:ltr;text-align:left;border-right:3px solid var(--gold)}
+.vocab-sentence .arabic{direction:rtl;text-align:right;font-size:16px;color:var(--text3);margin-top:4px}
+.stars-row{display:flex;justify-content:center;gap:4px;margin-bottom:14px}
+.star{font-size:26px;cursor:pointer;transition:var(--transition)}
+.star.filled{color:var(--gold)}
+.star.empty{color:var(--border2)}
+.write-input{width:100%;padding:12px 16px;background:#f8f9fa;border:1px solid var(--border2);border-radius:var(--rad);color:var(--text);font-size:20px;font-family:'Cairo',sans-serif;direction:ltr;text-align:center;outline:none;transition:var(--transition);margin-bottom:12px}
+.write-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,160,23,0.1)}
+.write-input.correct{border-color:var(--success);background:rgba(34,197,94,0.08)}
+.write-input.wrong{border-color:var(--danger);background:rgba(239,68,68,0.08)}
+.vocab-actions{display:flex;gap:8px}
+.vocab-btn{flex:1;padding:12px;border-radius:var(--rad);border:1px solid var(--border2);background:var(--card);color:var(--text);font-family:'Cairo',sans-serif;font-size:18px;font-weight:600;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:6px}
+.vocab-btn:hover{background:var(--card2);border-color:var(--gold);color:var(--gold)}
+.vocab-btn.primary{background:var(--gold);color:#1a1200;border-color:var(--gold)}
+.vocab-btn.primary:hover{background:var(--gold-light)}
+
+/* GRAMMAR */
+.grammar-tabs{display:flex;background:#f0f2f5;border-radius:var(--rad);overflow:hidden;margin-bottom:16px;border:1px solid var(--border)}
+.grammar-tab{flex:1;padding:10px;text-align:center;font-size:17px;font-weight:600;cursor:pointer;border:none;background:none;color:var(--text3);font-family:'Cairo',sans-serif;transition:var(--transition)}
+.grammar-tab.active{background:var(--gold);color:#1a1200;font-weight:700}
+.rule-card{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad);padding:16px;margin-bottom:12px}
+.rule-title{font-size:19px;font-weight:700;color:var(--gold);margin-bottom:8px}
+.rule-text{font-size:18px;color:var(--text2);line-height:1.7;margin-bottom:10px}
+.example{background:rgba(37,99,235,0.08);border-right:3px solid #2563eb;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:6px;font-size:18px;direction:ltr;text-align:left;color:var(--text)}
+.example .tr{direction:rtl;text-align:right;font-size:16px;color:var(--text3);margin-top:4px}
+.exercise-option{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:#ffffff;color:var(--text);font-family:'Cairo',sans-serif;cursor:pointer;direction:ltr;font-size:19px;margin-bottom:6px;transition:var(--transition);text-align:left}
+.exercise-option:hover{border-color:var(--border2)}
+.exercise-option.correct{background:rgba(34,197,94,0.15);border-color:var(--success);color:var(--success)}
+.exercise-option.wrong{background:rgba(239,68,68,0.15);border-color:var(--danger);color:var(--danger)}
+
+/* READING */
+.reading-controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.read-btn{padding:6px 12px;border-radius:20px;font-size:16px;font-weight:600;border:1px solid var(--border2);background:none;color:var(--text3);cursor:pointer;font-family:'Cairo',sans-serif;transition:var(--transition)}
+.read-btn.active{background:rgba(16,163,74,0.15);border-color:var(--success);color:var(--success)}
+.reading-text{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad);padding:16px;margin-bottom:12px;font-size:19px;direction:ltr;text-align:left;line-height:2.2;color:var(--text)}
+.reading-word{cursor:pointer;border-radius:3px;padding:0 2px;transition:var(--transition)}
+.reading-word:hover{background:rgba(212,160,23,0.2);color:var(--gold)}
+.reading-word.highlighted{background:rgba(212,160,23,0.3);color:var(--gold)}
+.word-tooltip{background:#1a2840;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 12px;font-size:17px;color:var(--text);margin-bottom:10px;text-align:center;display:none}
+.word-tooltip.show{display:block}
+
+/* LISTENING */
+.audio-player{background:#ffffff;border:1px solid var(--border);border-radius:var(--rad-lg);padding:20px;margin-bottom:16px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+.audio-title{font-size:19px;font-weight:700;margin-bottom:4px}
+.audio-sub{font-size:16px;color:var(--text3);margin-bottom:16px}
+.waveform{height:48px;background:#f0f2f5;border-radius:8px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:2px;padding:8px}
+.wave-bar{width:3px;border-radius:2px;background:var(--border2)}
+.wave-bar.playing{background:var(--gold);animation:wave 1.2s ease-in-out infinite}
+@keyframes wave{0%,100%{height:4px}50%{height:28px}}
+.audio-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px}
+.audio-btn{width:52px;height:52px;border-radius:50%;border:1px solid var(--border2);background:var(--card2);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.audio-btn.play{width:68px;height:68px;background:var(--gold);color:#1a1200;border:none;font-size:24px}
+.audio-btn:hover{border-color:var(--gold)}
+.speed-btns{display:flex;gap:4px;justify-content:center}
+.speed-btn{padding:3px 10px;border-radius:20px;font-size:16px;border:1px solid var(--border);background:none;color:var(--text3);cursor:pointer;font-family:'Cairo',sans-serif;transition:var(--transition)}
+.speed-btn.active{background:rgba(212,160,23,0.15);border-color:var(--gold);color:var(--gold)}
+.karaoke-wrap{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad);padding:16px;direction:ltr;text-align:left;line-height:2.4;font-size:19px;color:var(--text2);margin-bottom:12px}
+.k-word{cursor:pointer;padding:0 2px;border-radius:3px;transition:var(--transition)}
+.k-word.active{background:rgba(212,160,23,0.25);color:var(--gold);font-weight:600}
+.k-word.done{color:var(--text3)}
+
+/* AI CHAT */
+.ai-chat{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad-lg);padding:16px;margin-bottom:12px}
+.ai-chat-title{font-size:18px;font-weight:700;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ai-messages{max-height:200px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.ai-msg{padding:10px 12px;border-radius:10px;font-size:18px;line-height:1.6;max-width:90%}
+.ai-msg.user{background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.2);align-self:flex-end;text-align:right}
+.ai-msg.bot{background:#f8f9fa;border:1px solid var(--border);align-self:flex-start;direction:ltr;text-align:left}
+.ai-msg.loading{color:var(--text3);font-style:italic}
+.ai-input-row{display:flex;gap:8px}
+.ai-input{flex:1;padding:10px 14px;background:#f8f9fa;border:1px solid var(--border2);border-radius:var(--rad);color:var(--text);font-size:18px;font-family:'Cairo',sans-serif;outline:none;transition:var(--transition)}
+.ai-input:focus{border-color:var(--gold)}
+.ai-send{padding:10px 16px;background:var(--gold);color:#1a1200;border:none;border-radius:var(--rad);font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:18px;transition:var(--transition);white-space:nowrap}
+.ai-send:hover{background:var(--gold-light)}
+.ai-send:disabled{opacity:0.5;cursor:not-allowed}
+
+/* EXAM */
+.exam-hero{background:linear-gradient(135deg,rgba(200,150,12,0.08),rgba(200,150,12,0.03));border:1px solid rgba(200,150,12,0.2);border-radius:var(--rad-lg);padding:20px;margin-bottom:16px;text-align:center}
+.exam-title{font-size:24px;font-weight:900;color:var(--gold);margin-bottom:4px}
+.exam-sub{font-size:18px;color:var(--text2);margin-bottom:16px}
+.exam-skills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.exam-skill{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:8px 4px;text-align:center}
+.exam-skill .es-icon{font-size:22px;margin-bottom:2px}
+.exam-skill .es-name{font-size:15px;color:var(--text3)}
+.exam-skill .es-pct{font-size:17px;font-weight:700;color:var(--gold)}
+.exam-btn{width:100%;padding:14px;border:none;border-radius:var(--rad);font-size:19px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:var(--transition);margin-bottom:8px}
+.exam-btn.primary{background:linear-gradient(135deg,#92400e,var(--warning));color:#fff}
+.exam-btn.secondary{background:none;border:1px solid var(--border2);color:var(--text2)}
+.exam-btn:hover{transform:translateY(-1px)}
+
+/* LIBRARY */
+.lib-tabs{display:flex;background:#ffffff;border-bottom:1px solid var(--border);overflow-x:auto;box-shadow:0 2px 8px rgba(0,0,0,0.06);flex-shrink:0}
+.lib-tab{padding:12px 16px;font-size:17px;font-weight:600;white-space:nowrap;cursor:pointer;border:none;background:none;color:var(--text2);font-family:'Cairo',sans-serif;border-bottom:2px solid transparent;transition:var(--transition)}
+.lib-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.lib-content{flex:1;overflow-y:auto;padding:16px}
+.lib-item{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer;transition:var(--transition)}
+.lib-item:hover{border-color:var(--border2)}
+.lib-item-icon{font-size:26px;width:40px;text-align:center;flex-shrink:0}
+.lib-item-info{flex:1}
+.lib-item-name{font-size:18px;font-weight:700}
+.lib-item-sub{font-size:16px;color:var(--text3);margin-top:1px}
+.lib-badge{padding:3px 8px;border-radius:10px;font-size:15px;font-weight:600;background:rgba(212,160,23,0.15);color:var(--gold)}
+
+/* STATS */
+.stats-card{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad-lg);padding:16px;margin-bottom:12px}
+.stats-card-title{font-size:19px;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.skill-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.skill-label{font-size:17px;color:var(--text2);width:60px;text-align:right;flex-shrink:0}
+.skill-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.skill-fill{height:100%;border-radius:4px}
+.skill-pct{font-size:16px;color:var(--text3);width:32px;flex-shrink:0}
+
+/* SETTINGS */
+.settings-group{background:#ffffff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05);border-radius:var(--rad-lg);overflow:hidden;margin-bottom:12px}
+.settings-group-title{font-size:16px;font-weight:700;color:var(--text3);padding:10px 16px 6px;letter-spacing:1px;text-transform:uppercase}
+.settings-item{padding:14px 16px;display:flex;align-items:center;gap:12px;border-top:1px solid var(--border);cursor:pointer;transition:var(--transition)}
+.settings-item:first-of-type{border-top:none}
+.settings-item:hover{background:var(--card2)}
+.si2-icon{font-size:22px;width:32px;text-align:center}
+.si2-text{flex:1}
+.si2-label{font-size:18px;font-weight:600}
+.si2-hint{font-size:16px;color:var(--text3);margin-top:1px}
+.si2-arrow{font-size:18px;color:var(--text3)}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{display:none}
+.toggle-track{width:100%;height:100%;background:var(--border2);border-radius:12px;transition:var(--transition);cursor:pointer}
+.toggle-track.on{background:var(--gold)}
+.toggle-thumb{position:absolute;top:2px;right:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:var(--transition);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.toggle-track.on+.toggle-thumb{right:22px}
+
+/* UPLOAD */
+.upload-area{border:2px dashed var(--border2);border-radius:var(--rad-lg);padding:24px;text-align:center;cursor:pointer;transition:var(--transition);margin-bottom:12px}
+.upload-area:hover{border-color:var(--gold);background:rgba(212,160,23,0.04)}
+.upload-area .icon{font-size:36px;margin-bottom:8px}
+.upload-area .title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:4px}
+.upload-area .sub{font-size:17px;color:var(--text3)}
+.upload-progress{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:12px;margin-bottom:8px;display:none}
+.upload-progress.show{display:block}
+.upload-file-name{font-size:18px;font-weight:600;margin-bottom:6px}
+.upload-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.upload-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width 0.3s}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2840;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:8px 20px;font-size:18px;color:#ffffff;opacity:0;transition:all 0.3s;pointer-events:none;z-index:1000;white-space:nowrap;max-width:90vw;text-overflow:ellipsis;overflow:hidden}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(240,242,245,0.9);display:flex;align-items:center;justify-content:center;z-index:200;display:none}
+.loading-overlay.show{display:flex}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(min-width:481px){
+  body{background:#0a0f1a;display:flex;align-items:center;justify-content:center}
+  #app{border-radius:28px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- شاشة الإعداد الأولي -->
+<div id="setup-screen" style="position:fixed;inset:0;background:#f0f2f5;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;padding:32px;width:100%;max-width:440px;box-shadow:0 8px 32px rgba(0,0,0,0.12)">
+    
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="display:flex;flex-direction:column;width:40px;height:28px;border-radius:4px;overflow:hidden;margin:0 auto 12px;border:1px solid #ddd">
+        <span style="flex:1;background:#1a1a1a"></span>
+        <span style="flex:1;background:#c0392b"></span>
+        <span style="flex:1;background:#f0c040"></span>
+      </div>
+      <div style="font-size:22px;font-weight:900;color:#1a2840">Deutsch einfach</div>
+      <div style="font-size:13px;color:#718096;margin-top:2px">mit Abdo Al-Hassan 🇩🇪</div>
+    </div>
+
+    <div style="font-size:16px;font-weight:700;color:#1a2332;margin-bottom:6px">مرحباً! 👋</div>
+    <div style="font-size:14px;color:#718096;margin-bottom:24px">أدخل مفتاح Gemini AI لتفعيل التطبيق</div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:14px;font-weight:600;color:#1a2332;margin-bottom:6px">🤖 مفتاح Gemini API</div>
+      <input id="setup-gemini" type="password" placeholder="AIza..." 
+        style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px;outline:none;direction:ltr;font-family:monospace"
+        onfocus="this.style.borderColor='#C8960C'"
+        onblur="this.style.borderColor='#e2e8f0'">
+      <div style="font-size:12px;color:#718096;margin-top:4px">
+        احصل عليه من: <a href="https://aistudio.google.com" target="_blank" style="color:#C8960C">aistudio.google.com</a>
+      </div>
+    </div>
+
+    <div style="margin-bottom:24px">
+      <div style="font-size:14px;font-weight:600;color:#1a2332;margin-bottom:6px">🗄️ Supabase Anon Key <span style="font-weight:400;color:#718096">(اختياري)</span></div>
+      <input id="setup-supabase" type="password" placeholder="eyJ..." 
+        style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px;outline:none;direction:ltr;font-family:monospace"
+        onfocus="this.style.borderColor='#C8960C'"
+        onblur="this.style.borderColor='#e2e8f0'">
+    </div>
+
+    <button onclick="saveSetup()" 
+      style="width:100%;padding:14px;background:linear-gradient(135deg,#A07810,#C8960C);color:#1a1200;border:none;border-radius:10px;font-size:17px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer">
+      ابدأ التعلم! 🚀
+    </button>
+
+    <div style="text-align:center;margin-top:12px;font-size:12px;color:#718096">
+      مفاتيحك تُحفظ على جهازك فقط ولا تُرسل لأحد
+    </div>
+  </div>
+</div>
+
+
+  <header class="app-header">
+    <div class="header-logo">
+      <div class="flag"><span style="background:#1a1a1a"></span><span style="background:#c0392b"></span><span style="background:#f0c040"></span></div>
+      <div><div class="logo-text">Deutsch einfach</div><div class="logo-sub">mit Abdo Al-Hassan 🇩🇪</div></div>
+    </div>
+    <div class="header-right">
+      <div class="stat-pill">🔥 <span id="hdr-streak">0</span></div>
+      <div class="stat-pill">📚 <span id="hdr-words">0</span></div>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="home-hero">
+      <div class="hero-level">📚 المستوى A1 — المبتدئ</div>
+      <div class="hero-title">أهلاً بعودتك! 👋</div>
+      <div class="hero-sub">واصل رحلتك في تعلم الألمانية</div>
+      <div style="display:flex;justify-content:space-between;font-size:16px;color:var(--text3);margin-bottom:4px"><span>تقدم المستوى</span><span id="home-progress-label">الدرس 1 من 12</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="home-progress-bar" style="width:8%"></div></div>
+      <button class="continue-btn" onclick="showLesson()">▶ أكمل من حيث توقفت</button>
+    </div>
+    <div class="quick-stats">
+      <div class="stat-card"><div class="val" id="stat-words">0</div><div class="lbl">مفردة</div></div>
+      <div class="stat-card"><div class="val" id="stat-streak">0</div><div class="lbl">أيام متواصلة</div></div>
+      <div class="stat-card"><div class="val" id="stat-lessons">0</div><div class="lbl">درس مكتمل</div></div>
+    </div>
+    <div class="section-title">⚡ اليوم</div>
+    <div class="smart-grid">
+      <div class="smart-card accent" onclick="goToSection('vocab')"><div class="sc-icon">📚</div><div class="sc-title">مراجعة المفردات</div><div class="sc-sub" id="review-count">جارٍ التحميل...</div></div>
+      <div class="smart-card" onclick="showPage('page-stats')"><div class="sc-icon">📊</div><div class="sc-title">مقياس الجاهزية</div><div class="sc-sub" id="readiness">احسب جاهزيتك</div></div>
+      <div class="smart-card" onclick="showToast('📋 تعلمت اليوم: ابدأ درسك الأول!')"><div class="sc-icon">📋</div><div class="sc-title">ملخص الأمس</div><div class="sc-sub">اضغط للتفاصيل</div></div>
+      <div class="smart-card" onclick="goToSection('vocab')"><div class="sc-icon">🔔</div><div class="sc-title">تذكير المراجعة</div><div class="sc-sub" id="reminder-count">جارٍ التحميل...</div></div>
+    </div>
+    <div class="section-title">📅 نشاط هذا الأسبوع</div>
+    <div class="activity-wrap">
+      <div style="display:flex;justify-content:space-between;font-size:15px;color:var(--text3);margin-bottom:4px"><span>ن</span><span>ث</span><span>ر</span><span>خ</span><span>ج</span><span>س</span><span>أ</span></div>
+      <div class="activity-grid" id="activity-grid"></div>
+    </div>
+  </div>
+
+  <!-- LEVELS PAGE -->
+  <div class="page" id="page-levels">
+    <div class="levels-header"><h2>المستويات والدروس</h2><p>اختر مستواك وابدأ التعلم</p></div>
+    <div style="overflow-y:auto;flex:1;padding-bottom:8px">
+      <div class="level-card" onclick="toggleLevel('a1')">
+        <div class="level-header-row">
+          <div class="level-badge a1">A1</div>
+          <div class="level-info"><div class="level-name">المستوى الأول — مبتدئ</div><div class="level-desc">التحيات، الأرقام، العائلة...</div></div>
+          <span style="color:var(--text3)" id="arrow-a1">▾</span>
+        </div>
+        <div class="level-progress-wrap">
+          <div style="display:flex;justify-content:space-between;font-size:16px;color:var(--text3)"><span id="a1-progress-text">0 من 12 درس</span><span id="a1-pct">0%</span></div>
+          <div class="level-progress-bar"><div class="level-progress-fill fill-green" id="a1-bar" style="width:0%"></div></div>
+        </div>
+        <div class="level-lessons" id="lessons-a1"></div>
+      </div>
+      <div class="level-card"><div class="level-header-row"><div class="level-badge locked">A2</div><div class="level-info"><div class="level-name" style="color:var(--text3)">المستوى الثاني</div><div class="level-desc">🔒 أكمل A1 أولاً</div></div></div></div>
+      <div class="level-card"><div class="level-header-row"><div class="level-badge locked">B1</div><div class="level-info"><div class="level-name" style="color:var(--text3)">المستوى الثالث</div><div class="level-desc">🔒 أكمل A2 أولاً</div></div></div></div>
+      <div class="level-card" style="margin-bottom:12px"><div class="level-header-row"><div class="level-badge locked">B2</div><div class="level-info"><div class="level-name" style="color:var(--text3)">المستوى الرابع</div><div class="level-desc">🔒 أكمل B1 أولاً</div></div></div></div>
+    </div>
+  </div>
+
+  <!-- LESSON PAGE -->
+  <div class="page" id="page-lesson">
+    <div class="lesson-header">
+      <button class="lesson-back" onclick="showPage('page-levels')">← العودة للمستويات</button>
+      <div class="lesson-title" id="lesson-title">الدرس 1</div>
+      <div class="lesson-sub">المستوى A1 · 7 أقسام</div>
+      <div class="lesson-progress-dots" id="lesson-dots"></div>
+    </div>
+    <div class="sections-list">
+      <div class="section-item active-section" onclick="goToSection('vocab')"><div class="si-icon vocab">📚</div><div class="si-info"><div class="si-name">المفردات وحفظها</div><div class="si-desc">تعلم وحفظ مفردات الدرس</div></div><div class="si-badge inprogress">جارٍ</div></div>
+      <div class="section-item" onclick="goToSection('grammar')"><div class="si-icon grammar">📋</div><div class="si-info"><div class="si-name">القواعد</div><div class="si-desc">قواعد نحوية مع تمارين</div></div><div class="si-badge locked">لم يبدأ</div></div>
+      <div class="section-item" onclick="goToSection('reading')"><div class="si-icon reading">📖</div><div class="si-info"><div class="si-name">القراءة</div><div class="si-desc">نصوص قراءة تفاعلية</div></div><div class="si-badge locked">لم يبدأ</div></div>
+      <div class="section-item" onclick="goToSection('listening')"><div class="si-icon listening">🎧</div><div class="si-info"><div class="si-name">الاستماع</div><div class="si-desc">تدريبات استماع مع تتبع</div></div><div class="si-badge locked">لم يبدأ</div></div>
+      <div class="section-item locked-section"><div class="si-icon writing">✍️</div><div class="si-info"><div class="si-name">الكتابة</div><div class="si-desc">🔒 أكمل الاستماع أولاً</div></div><div class="si-badge locked">🔒</div></div>
+      <div class="section-item locked-section"><div class="si-icon speaking">🗣️</div><div class="si-info"><div class="si-name">المحادثة</div><div class="si-desc">🔒 أكمل الكتابة أولاً</div></div><div class="si-badge locked">🔒</div></div>
+      <div class="section-item locked-section"><div class="si-icon exam">📝</div><div class="si-info"><div class="si-name">الامتحان</div><div class="si-desc">🔒 أكمل جميع الأقسام</div></div><div class="si-badge locked">🔒</div></div>
+    </div>
+  </div>
+
+  <!-- LIBRARY PAGE -->
+  <div class="page" id="page-library">
+    <div class="lib-tabs">
+      <button class="lib-tab active" onclick="setLibTab('vocab',this)">📚 المفردات</button>
+      <button class="lib-tab" onclick="setLibTab('texts',this)">📖 النصوص</button>
+      <button class="lib-tab" onclick="setLibTab('grammar',this)">📋 القواعد</button>
+      <button class="lib-tab" onclick="setLibTab('audio',this)">🎧 الاستماع</button>
+      <button class="lib-tab" onclick="setLibTab('writings',this)">✍️ كتاباتي</button>
+      <button class="lib-tab" onclick="showDriveFiles()">📂 Drive</button>
+    </div>
+    <div class="lib-content" id="lib-content">
+      <div style="text-align:center;padding:32px;color:var(--text3)">
+        <div style="font-size:36px;margin-bottom:8px">📚</div>
+        <div style="font-size:19px;font-weight:700;color:var(--text2);margin-bottom:4px">المكتبة فارغة حالياً</div>
+        <div style="font-size:17px">أكمل دروسك لتملأ مكتبتك!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS PAGE -->
+  <div class="page" id="page-stats">
+    <div class="levels-header"><h2>📊 إحصائياتي</h2><p>تتبع تقدمك في اللغة الألمانية</p></div>
+    <div style="overflow-y:auto;flex:1;padding:16px">
+      <div class="quick-stats" style="padding:0 0 16px">
+        <div class="stat-card"><div class="val" id="st-time">0h</div><div class="lbl">وقت التعلم</div></div>
+        <div class="stat-card"><div class="val" id="st-words">0</div><div class="lbl">مفردة</div></div>
+        <div class="stat-card"><div class="val" id="st-acc">0%</div><div class="lbl">الدقة</div></div>
+      </div>
+      <div class="stats-card">
+        <div class="stats-card-title">📈 مستوى المهارات</div>
+        <div id="skills-bars"></div>
+      </div>
+      <div class="stats-card">
+        <div class="stats-card-title">🏆 الإنجازات</div>
+        <div id="achievements" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS PAGE -->
+  <div class="page" id="page-settings">
+    <div class="levels-header"><h2>⚙️ الإعدادات</h2><p>تخصيص تجربة التعلم</p></div>
+    <div style="overflow-y:auto;flex:1;padding:12px 16px">
+
+      
+      <!-- DRIVE -->
+      <div class="settings-group" id="drive-settings-group">
+        <div class="settings-group-title">Google Drive — المستوى A1</div>
+        <div class="settings-item" onclick="showDriveFiles()">
+          <div class="si2-icon">📚</div>
+          <div class="si2-text">
+            <div class="si2-label">مكتبة الكتب</div>
+            <div class="si2-hint">فتح وعرض جميع كتب A1</div>
+          </div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="openAudioFolder('kurs')">
+          <div class="si2-icon">🔊</div>
+          <div class="si2-text">
+            <div class="si2-label">صوتيات كتاب الدرس</div>
+            <div class="si2-hint">فتح في Google Drive</div>
+          </div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="openAudioFolder('arbeit')">
+          <div class="si2-icon">🔊</div>
+          <div class="si2-text">
+            <div class="si2-label">صوتيات كتاب التمارين</div>
+            <div class="si2-hint">فتح في Google Drive</div>
+          </div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="openVideoFolder()">
+          <div class="si2-icon">🎬</div>
+          <div class="si2-text">
+            <div class="si2-label">الفيديوهات</div>
+            <div class="si2-hint">فتح في Google Drive</div>
+          </div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="analyzeBookWithAI('kursbuch')">
+          <div class="si2-icon">🤖</div>
+          <div class="si2-text">
+            <div class="si2-label">تحليل الكتب بالذكاء الاصطناعي</div>
+            <div class="si2-hint">استخلاص صفحات كل درس تلقائياً</div>
+          </div>
+          <div class="si2-arrow">←</div>
+        </div>
+      </div>
+<!-- API KEYS -->
+      <div class="settings-group">
+        <div class="settings-group-title">مفاتيح الذكاء الاصطناعي</div>
+        <div class="settings-item" onclick="editKey('gemini')">
+          <div class="si2-icon">🤖</div>
+          <div class="si2-text"><div class="si2-label">Gemini API Key</div><div class="si2-hint" id="gemini-status">غير محدد</div></div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="editKey('supabase')">
+          <div class="si2-icon">🗄️</div>
+          <div class="si2-text"><div class="si2-label">Supabase Anon Key</div><div class="si2-hint" id="supabase-status">غير محدد</div></div>
+          <div class="si2-arrow">←</div>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="settings-group">
+        <div class="settings-group-title">رفع المحتوى</div>
+        <div class="settings-item" onclick="showUploadPanel()">
+          <div class="si2-icon">📁</div>
+          <div class="si2-text"><div class="si2-label">رفع ملفات الدرس</div><div class="si2-hint">مفردات، نصوص، تمارين</div></div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="showToast('🔗 ربط رابط YouTube أو Youglish')">
+          <div class="si2-icon">🎬</div>
+          <div class="si2-text"><div class="si2-label">إضافة رابط فيديو</div><div class="si2-hint">YouTube أو Youglish</div></div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item" onclick="showToast('☁️ ربط Google Drive')">
+          <div class="si2-icon">☁️</div>
+          <div class="si2-text"><div class="si2-label">ربط Google Drive</div><div class="si2-hint">للفيديوهات والملفات الكبيرة</div></div>
+          <div class="si2-arrow">←</div>
+        </div>
+      </div>
+
+      <!-- PREFS -->
+      <div class="settings-group">
+        <div class="settings-group-title">التفضيلات</div>
+        <div class="settings-item">
+          <div class="si2-icon">🎯</div>
+          <div class="si2-text"><div class="si2-label">الهدف اليومي</div><div class="si2-hint">20 دقيقة</div></div>
+          <div class="si2-arrow">←</div>
+        </div>
+        <div class="settings-item">
+          <div class="si2-icon">🔔</div>
+          <div class="si2-text"><div class="si2-label">التذكيرات</div><div class="si2-hint">مفعّلة</div></div>
+          <div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-track on"></div><div class="toggle-thumb"></div></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:16px 0;font-size:17px;color:var(--text3)">
+        Deutsch Lernen v1.0 · بُني بـ ❤️
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION PAGES -->
+
+  <!-- VOCAB -->
+  <div class="section-page" id="sec-vocab">
+    <div class="section-top">
+      <button class="back-btn" onclick="closeSection()">←</button>
+      <div class="section-top-info"><div class="section-top-name">📚 المفردات</div><div class="section-top-sub" id="vocab-lesson-sub">الدرس الحالي</div></div>
+    </div>
+    <div class="section-content">
+      <div class="vocab-progress-row">
+        <div class="vocab-counter">الكلمة <span id="vocab-num">1</span> من <span id="vocab-total">0</span></div>
+        <div class="mode-btns">
+          <button class="mode-btn active" onclick="setMode('cards',this)">بطاقات</button>
+          <button class="mode-btn" onclick="setMode('list',this)">قائمة</button>
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:16px;color:var(--text3);margin-bottom:4px"><span>تقدم الدرس</span><span id="vocab-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="vocab-progress" style="width:0%"></div></div>
+      </div>
+      <div id="vocab-card-wrap">
+        <div class="vocab-card">
+          <div class="vocab-german" id="vc-german">—</div>
+          <div class="vocab-type" id="vc-type">—</div>
+          <div class="vocab-arabic" id="vc-arabic">—</div>
+          <div class="vocab-sentence"><div id="vc-sentence">—</div><div class="arabic" id="vc-sentence-ar">—</div></div>
+          <div class="stars-row" id="stars-row">
+            <span class="star empty" onclick="setStar(1)">★</span>
+            <span class="star empty" onclick="setStar(2)">★</span>
+            <span class="star empty" onclick="setStar(3)">★</span>
+            <span class="star empty" onclick="setStar(4)">★</span>
+            <span class="star empty" onclick="setStar(5)">★</span>
+          </div>
+          <input class="write-input" id="write-input" placeholder="اكتب الكلمة بالألمانية للتحقق..." onkeyup="checkWrite(this)">
+          <div class="vocab-actions">
+            <button class="vocab-btn" onclick="playVocabAudio()">🔊 نطق</button>
+            <button class="vocab-btn" onclick="askAI()">🤖 اسأل AI</button>
+            <button class="vocab-btn primary" onclick="nextVocab()">التالي ←</button>
+          </div>
+        </div>
+      </div>
+      <!-- AI Chat for vocab -->
+      <div class="ai-chat">
+        <div class="ai-chat-title">🤖 مساعد الذكاء الاصطناعي</div>
+        <div class="ai-messages" id="vocab-ai-messages"></div>
+        <div class="ai-input-row">
+          <input class="ai-input" id="vocab-ai-input" placeholder="اسأل عن الكلمة..." onkeydown="if(event.key==='Enter')sendVocabAI()">
+          <button class="ai-send" id="vocab-ai-send" onclick="sendVocabAI()">إرسال</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAMMAR -->
+  <div class="section-page" id="sec-grammar">
+    <div class="section-top">
+      <button class="back-btn" onclick="closeSection()">←</button>
+      <div class="section-top-info"><div class="section-top-name">📋 القواعد</div><div class="section-top-sub">قواعد الدرس الحالي</div></div>
+    </div>
+    <div class="section-content">
+      <div class="grammar-tabs">
+        <button class="grammar-tab active" onclick="setGrammarTab('explain',this)">الشرح</button>
+        <button class="grammar-tab" onclick="setGrammarTab('examples',this)">الأمثلة</button>
+        <button class="grammar-tab" onclick="setGrammarTab('exercise',this)">التمارين</button>
+        <button class="grammar-tab" onclick="setGrammarTab('challenge',this)">التحدي ⏱️</button>
+      </div>
+      <div id="grammar-explain">
+        <div class="rule-card">
+          <div class="rule-title">📘 القاعدة الرئيسية للدرس</div>
+          <div class="rule-text" id="grammar-rule-text">أضف ملف القواعد في الإعدادات لعرض المحتوى هنا.</div>
+        </div>
+        <div class="rule-card" style="background:rgba(239,68,68,0.04);border-color:rgba(239,68,68,0.2)">
+          <div class="rule-title">⚠️ أخطاء شائعة لدى الطلاب العرب</div>
+          <div class="rule-text" id="grammar-mistakes">سيتم توليدها بالذكاء الاصطناعي بعد إضافة المحتوى.</div>
+        </div>
+      </div>
+      <div id="grammar-examples" style="display:none">
+        <div class="rule-card"><div class="rule-title">📖 أمثلة من الدرس</div><div id="grammar-examples-list"><div style="color:var(--text3);font-size:18px">أضف ملف الكتاب لعرض الأمثلة.</div></div></div>
+      </div>
+      <div id="grammar-exercise" style="display:none">
+        <div class="rule-card"><div class="rule-title">✏️ تمارين تفاعلية</div><div id="exercise-content"><div style="color:var(--text3);font-size:18px">أضف ملف التمارين لعرض التمارين.</div></div></div>
+      </div>
+      <div id="grammar-challenge" style="display:none">
+        <div class="rule-card" style="text-align:center">
+          <div class="rule-title">⏱️ تحدي الزمن — 60 ثانية</div>
+          <div style="font-size:52px;font-weight:900;color:var(--gold);margin:16px 0" id="timer-display">60</div>
+          <div style="font-size:18px;color:var(--text3);margin-bottom:16px">كم جملة صحيحة تستطيع بناءها؟</div>
+          <button onclick="startTimer()" style="width:100%;padding:12px;background:var(--gold);color:#1a1200;border:none;border-radius:var(--rad);font-size:19px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer">ابدأ التحدي!</button>
+          <div style="margin-top:12px;font-size:18px;color:var(--text2)" id="timer-score"></div>
+        </div>
+      </div>
+      <!-- AI Grammar Assistant -->
+      <div class="ai-chat" style="margin-top:12px">
+        <div class="ai-chat-title">🤖 اسأل عن القاعدة</div>
+        <div class="ai-messages" id="grammar-ai-messages"></div>
+        <div class="ai-input-row">
+          <input class="ai-input" id="grammar-ai-input" placeholder="اسأل عن القاعدة النحوية..." onkeydown="if(event.key==='Enter')sendGrammarAI()">
+          <button class="ai-send" onclick="sendGrammarAI()">إرسال</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- READING -->
+  <div class="section-page" id="sec-reading">
+    <div class="section-top">
+      <button class="back-btn" onclick="closeSection()">←</button>
+      <div class="section-top-info"><div class="section-top-name">📖 القراءة</div><div class="section-top-sub">نص الدرس</div></div>
+    </div>
+    <div class="section-content">
+      <div class="reading-controls">
+        <button class="read-btn active" onclick="setReadMode('focus',this)">🎯 مركّز</button>
+        <button class="read-btn" onclick="setReadMode('audio',this)">🎧 مع صوت</button>
+        <button class="read-btn" onclick="setReadMode('notes',this)">✏️ ملاحظات</button>
+      </div>
+      <div class="word-tooltip" id="word-tooltip"></div>
+      <div class="reading-text" id="reading-text-content">
+        <div style="text-align:center;color:var(--text3);padding:20px">
+          <div style="font-size:32px;margin-bottom:8px">📖</div>
+          <div style="font-size:19px;font-weight:700;color:var(--text2);margin-bottom:4px">لا يوجد نص بعد</div>
+          <div style="font-size:17px">أضف ملف الكتاب في الإعدادات</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+        <button onclick="readingExercise('fill')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">📝 ملء الفراغات</button>
+        <button onclick="readingExercise('questions')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">❓ أسئلة الفهم</button>
+        <button onclick="readingExercise('reverse')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">🔄 ترجمة عكسية</button>
+        <button onclick="readingExercise('error')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">🔍 اكتشف الخطأ</button>
+      </div>
+      <div class="ai-chat">
+        <div class="ai-chat-title">🤖 اسأل عن النص</div>
+        <div class="ai-messages" id="reading-ai-messages"></div>
+        <div class="ai-input-row">
+          <input class="ai-input" id="reading-ai-input" placeholder="اسأل عن النص بالعربية أو الألمانية..." onkeydown="if(event.key==='Enter')sendReadingAI()">
+          <button class="ai-send" onclick="sendReadingAI()">إرسال</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTENING -->
+  <div class="section-page" id="sec-listening">
+    <div class="section-top">
+      <button class="back-btn" onclick="closeSection()">←</button>
+      <div class="section-top-info"><div class="section-top-name">🎧 الاستماع</div><div class="section-top-sub">تسجيلات الدرس</div></div>
+    </div>
+    <div class="section-content">
+      <div class="audio-player">
+        <div class="audio-title" id="audio-title">لا يوجد تسجيل بعد</div>
+        <div class="audio-sub" id="audio-sub">أضف ملفات صوتية في الإعدادات</div>
+        <div class="waveform" id="waveform"></div>
+        <div class="audio-controls">
+          <button class="audio-btn" onclick="seekBack()">⏮</button>
+          <button class="audio-btn play" id="play-btn" onclick="togglePlay()">▶</button>
+          <button class="audio-btn" onclick="seekForward()">⏭</button>
+        </div>
+        <div class="speed-btns">
+          <button class="speed-btn" onclick="setSpeed(this,0.5)">0.5×</button>
+          <button class="speed-btn active" onclick="setSpeed(this,1.0)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(this,1.5)">1.5×</button>
+          <button class="speed-btn" onclick="setSpeed(this,2.0)">2.0×</button>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-size:18px;font-weight:700;color:var(--text2)">📜 النص مع التتبع</div>
+        <button onclick="toggleKaraoke()" style="padding:4px 10px;border-radius:20px;border:1px solid var(--gold);background:rgba(212,160,23,0.1);color:var(--gold);font-size:16px;cursor:pointer;font-family:'Cairo',sans-serif" id="karaoke-btn">تفعيل التتبع</button>
+      </div>
+      <div class="karaoke-wrap" id="karaoke-text">
+        <div style="text-align:center;color:var(--text3);padding:16px;font-size:18px">أضف ملفات صوتية لتظهر النصوص هنا</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+        <button onclick="listeningExercise('dictation')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">📝 إملاء صوتي</button>
+        <button onclick="listeningExercise('fill')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">🎵 ملء الفراغات</button>
+        <button onclick="listeningExercise('compare')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">🔊 قارن نطقك</button>
+        <button onclick="listeningExercise('speed')" style="padding:10px;border-radius:var(--rad);border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:'Cairo',sans-serif;font-size:17px;cursor:pointer">⚡ تحدي السرعة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM -->
+  <div class="section-page" id="sec-exam">
+    <div class="section-top">
+      <button class="back-btn" onclick="closeSection()">←</button>
+      <div class="section-top-info"><div class="section-top-name">📝 الامتحان</div><div class="section-top-sub" id="exam-lesson-sub">الدرس الحالي</div></div>
+    </div>
+    <div class="section-content">
+      <div class="exam-hero">
+        <div class="exam-title">امتحان الدرس</div>
+        <div class="exam-sub">شامل لجميع المهارات · درجة النجاح 60%</div>
+        <div class="exam-skills">
+          <div class="exam-skill"><div class="es-icon">📖</div><div class="es-name">قراءة</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">🎧</div><div class="es-name">استماع</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">✍️</div><div class="es-name">كتابة</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">🗣️</div><div class="es-name">محادثة</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">📚</div><div class="es-name">مفردات</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">📋</div><div class="es-name">قواعد</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">🔤</div><div class="es-name">حفظ</div><div class="es-pct">12.5%</div></div>
+          <div class="exam-skill"><div class="es-icon">🔬</div><div class="es-name">فهم</div><div class="es-pct">12.5%</div></div>
+        </div>
+        <button class="exam-btn primary" onclick="startExam(false)">🎯 بدء الامتحان الرسمي</button>
+        <button class="exam-btn secondary" onclick="startExam(true)">📝 امتحان تجريبي</button>
+      </div>
+      <div class="smart-card" onclick="startDiagnostic()"><div class="sc-icon">🔍</div><div class="sc-title">امتحان تشخيصي</div><div class="sc-sub">3 أسئلة لمعرفة نقاط ضعفك قبل البدء</div></div>
+    </div>
+  </div>
+
+
+  <!-- DRIVE FILES PANEL -->
+  <!-- EXTRACTION PANEL -->
+  <div class="section-page" id="sec-drive">
+    <div class="section-top">
+      <button class="back-btn" onclick="closeSection()">←</button>
+      <div class="section-top-info">
+        <div class="section-top-name">🤖 استخلاص الكتب</div>
+        <div class="section-top-sub">Netzwerk Neu A1</div>
+      </div>
+    </div>
+    <div class="section-content">
+      
+      <!-- رفع الكتب -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--rad-lg);padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)">
+        <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:12px">📚 ارفع ملفات الكتب</div>
+        
+        <div id="upload-books-list" style="display:flex;flex-direction:column;gap:8px">
+          <!-- كتاب الدرس -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📗</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">كتاب الدرس</div>
+              <div style="font-size:12px;color:var(--text3)" id="kursbuch-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-kursbuch').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-kursbuch" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'kursbuch','كتاب الدرس')">
+          </div>
+          
+          <!-- كتاب التمارين -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📘</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">كتاب التمارين</div>
+              <div style="font-size:12px;color:var(--text3)" id="uebungsbuch-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-uebungsbuch').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-uebungsbuch" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'uebungsbuch','كتاب التمارين')">
+          </div>
+          
+          <!-- كتاب المفردات -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📚</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">كتاب المفردات</div>
+              <div style="font-size:12px;color:var(--text3)" id="glossar-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-glossar').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-glossar" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'glossar','كتاب المفردات')">
+          </div>
+
+          <!-- نصوص الكتاب 1-6 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📄</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">نصوص الكتاب 1-6</div>
+              <div style="font-size:12px;color:var(--text3)" id="transkript-kb1-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-transkript-kb1').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-transkript-kb1" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'transkript_kb1','نصوص الكتاب 1-6')">
+          </div>
+
+          <!-- نصوص الكتاب 7-12 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📄</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">نصوص الكتاب 7-12</div>
+              <div style="font-size:12px;color:var(--text3)" id="transkript-kb2-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-transkript-kb2').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-transkript-kb2" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'transkript_kb2','نصوص الكتاب 7-12')">
+          </div>
+
+          <!-- نصوص التمارين 1-6 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📄</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">نصوص التمارين 1-6</div>
+              <div style="font-size:12px;color:var(--text3)" id="transkript-ueb1-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-transkript-ueb1').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-transkript-ueb1" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'transkript_ueb1','نصوص التمارين 1-6')">
+          </div>
+
+          <!-- نصوص التمارين 7-12 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">📄</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">نصوص التمارين 7-12</div>
+              <div style="font-size:12px;color:var(--text3)" id="transkript-ueb2-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-transkript-ueb2').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-transkript-ueb2" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'transkript_ueb2','نصوص التمارين 7-12')">
+          </div>
+
+          <!-- حلول الكتاب 1-6 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">✅</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">حلول الكتاب 1-6</div>
+              <div style="font-size:12px;color:var(--text3)" id="loesungen-kb1-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-loesungen-kb1').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-loesungen-kb1" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'loesungen_kb1','حلول الكتاب 1-6')">
+          </div>
+
+          <!-- حلول الكتاب 7-12 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">✅</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">حلول الكتاب 7-12</div>
+              <div style="font-size:12px;color:var(--text3)" id="loesungen-kb2-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-loesungen-kb2').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-loesungen-kb2" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'loesungen_kb2','حلول الكتاب 7-12')">
+          </div>
+
+          <!-- حلول التمارين 1-6 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">✅</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">حلول التمارين 1-6</div>
+              <div style="font-size:12px;color:var(--text3)" id="loesungen-ueb1-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-loesungen-ueb1').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-loesungen-ueb1" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'loesungen_ueb1','حلول التمارين 1-6')">
+          </div>
+
+          <!-- حلول التمارين 7-12 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">✅</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">حلول التمارين 7-12</div>
+              <div style="font-size:12px;color:var(--text3)" id="loesungen-ueb2-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-loesungen-ueb2').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-loesungen-ueb2" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'loesungen_ueb2','حلول التمارين 7-12')">
+          </div>
+
+          <!-- نصوص الفيديو 1-6 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">🎬</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">نصوص الفيديو 1-6</div>
+              <div style="font-size:12px;color:var(--text3)" id="transkript-vid1-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-transkript-vid1').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-transkript-vid1" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'transkript_vid1','نصوص الفيديو 1-6')">
+          </div>
+
+          <!-- نصوص الفيديو 7-12 -->
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:var(--rad);border:1px solid var(--border)">
+            <div style="font-size:22px">🎬</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">نصوص الفيديو 7-12</div>
+              <div style="font-size:12px;color:var(--text3)" id="transkript-vid2-status">لم يُرفع بعد</div>
+            </div>
+            <button onclick="document.getElementById('upload-transkript-vid2').click()" style="padding:8px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer">رفع</button>
+            <input type="file" id="upload-transkript-vid2" accept=".pdf" style="display:none" onchange="handleBookUpload(this,'transkript_vid2','نصوص الفيديو 7-12')">
+          </div>
+        </div>
+      </div>
+
+      <!-- شريط التقدم -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--rad);padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <div style="font-size:15px;font-weight:700;color:var(--text2)" id="extraction-label">في انتظار رفع الملفات...</div>
+          <div style="font-size:15px;font-weight:700;color:var(--gold)" id="extraction-pct">0%</div>
+        </div>
+        <div style="height:12px;background:var(--border);border-radius:6px;overflow:hidden">
+          <div id="extraction-bar" style="height:100%;background:linear-gradient(90deg,#1a2840,var(--gold));border-radius:6px;width:0%;transition:width 0.5s"></div>
+        </div>
+      </div>
+
+      <!-- أزرار الاستخلاص -->
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+        <button onclick="extractSingleLesson(1)"
+          style="padding:16px;background:linear-gradient(135deg,#1a2840,#2c3e6a);color:#fff;border:none;border-radius:var(--rad);font-size:18px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer">
+          🤖 استخلص Lektion 1 فقط (اختبار)
+        </button>
+        <button onclick="startFullExtraction()"
+          style="padding:16px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#1a1200;border:none;border-radius:var(--rad);font-size:18px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer">
+          🚀 استخلص كل الكتب (12 درس)
+        </button>
+      </div>
+
+      <!-- نتيجة الاستخلاص -->
+      <div id="extraction-result"></div>
+
+    </div>
+  </div>
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="showPage('page-home')"><span class="nav-icon">🏠</span><span class="nav-label">الرئيسية</span></button>
+    <button class="nav-item" id="nav-levels" onclick="showPage('page-levels')"><span class="nav-icon">📚</span><span class="nav-label">الدروس</span></button>
+    <button class="nav-item" id="nav-library" onclick="showPage('page-library')"><span class="nav-icon">🔖</span><span class="nav-label">المكتبة</span></button>
+    <button class="nav-item" id="nav-stats" onclick="showPage('page-stats')"><span class="nav-icon">📊</span><span class="nav-label">تقدمي</span></button>
+    <button class="nav-item" id="nav-settings" onclick="showPage('page-settings')"><span class="nav-icon">⚙️</span><span class="nav-label">الإعدادات</span></button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <div class="loading-overlay" id="loading"><div class="loading-spinner"></div></div>
+</div>
+
+<script>
+// ===== STORAGE =====
+const DB = {
+  get: k => { try { return JSON.parse(localStorage.getItem('dl_'+k)) } catch(e) { return null } },
+  set: (k,v) => localStorage.setItem('dl_'+k, JSON.stringify(v)),
+  keys: {
+    progress: 'progress',
+    vocab: 'vocab',
+    stats: 'stats',
+    settings: 'settings',
+    streak: 'streak',
+  }
+};
+
+// ===== SETTINGS =====
+let SETTINGS = DB.get('settings') || {
+  geminiKey: '',
+  supabaseKey: '',
+  dailyGoal: 20,
+  notifications: true,
+};
+
+function saveSettings() { DB.set('settings', SETTINGS); }
+
+// ===== STATE =====
+let currentPage = 'page-home';
+let currentSection = null;
+let vocabList = [];
+let vocabIndex = 0;
+let isPlaying = false;
+let timerInterval = null;
+let timerSeconds = 60;
+let karaokeActive = false;
+
+// ===== PAGES =====
+function showPage(id) {
+  closeSection();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  currentPage = id;
+  const map = {'page-home':'nav-home','page-levels':'nav-levels','page-library':'nav-library','page-stats':'nav-stats','page-settings':'nav-settings'};
+  if(map[id]) document.getElementById(map[id]).classList.add('active');
+  if(id === 'page-stats') renderStats();
+  if(id === 'page-settings') renderSettings();
+  if(id === 'page-levels') renderLevels();
+}
+
+function showLesson(num) {
+  showPage('page-levels');
+  document.getElementById('nav-levels').classList.add('active');
+  document.getElementById('page-lesson').classList.add('active');
+  document.getElementById('page-levels').classList.remove('active');
+  if(num) document.getElementById('lesson-title').textContent = `الدرس ${num}`;
+}
+
+// ===== SECTIONS =====
+function goToSection(id) {
+  document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  if(sec) { sec.classList.add('active'); currentSection = id; }
+  if(id === 'vocab') initVocab();
+}
+
+function closeSection() {
+  document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+  currentSection = null;
+}
+
+// ===== VOCAB =====
+function initVocab() {
+  const saved = DB.get('vocab') || [];
+  vocabList = saved.length > 0 ? saved : getDefaultVocab();
+  vocabIndex = 0;
+  renderVocab();
+}
+
+function getDefaultVocab() {
+  return [
+    {german:'die Mutter',type:'Nomen · weiblich',arabic:'الأم',sentence:'Meine Mutter heißt Anna.',sentenceAr:'أمي اسمها آنا.',strength:0},
+    {german:'der Vater',type:'Nomen · männlich',arabic:'الأب',sentence:'Mein Vater arbeitet als Arzt.',sentenceAr:'أبي يعمل طبيباً.',strength:0},
+    {german:'der Bruder',type:'Nomen · männlich',arabic:'الأخ',sentence:'Ich habe einen Bruder.',sentenceAr:'لدي أخ.',strength:0},
+    {german:'die Schwester',type:'Nomen · weiblich',arabic:'الأخت',sentence:'Meine Schwester studiert in Hamburg.',sentenceAr:'أختي تدرس في هامبورغ.',strength:0},
+    {german:'die Familie',type:'Nomen · weiblich',arabic:'العائلة',sentence:'Meine Familie ist klein.',sentenceAr:'عائلتي صغيرة.',strength:0},
+  ];
+}
+
+function renderVocab() {
+  const v = vocabList[vocabIndex];
+  if(!v) return;
+  document.getElementById('vc-german').textContent = v.german;
+  document.getElementById('vc-type').textContent = v.type || '';
+  document.getElementById('vc-arabic').textContent = v.arabic;
+  document.getElementById('vc-sentence').textContent = v.sentence || '';
+  document.getElementById('vc-sentence-ar').textContent = v.sentenceAr || '';
+  document.getElementById('vocab-num').textContent = vocabIndex + 1;
+  document.getElementById('vocab-total').textContent = vocabList.length;
+  const pct = Math.round(((vocabIndex) / vocabList.length) * 100);
+  document.getElementById('vocab-pct').textContent = pct + '%';
+  document.getElementById('vocab-progress').style.width = pct + '%';
+  document.getElementById('write-input').value = '';
+  document.getElementById('write-input').className = 'write-input';
+  renderStars(v.strength || 0);
+}
+
+function renderStars(n) {
+  document.querySelectorAll('#stars-row .star').forEach((s,i) => {
+    s.className = i < n ? 'star filled' : 'star empty';
+  });
+}
+
+function setStar(n) {
+  if(vocabList[vocabIndex]) {
+    vocabList[vocabIndex].strength = n;
+    DB.set('vocab', vocabList);
+    renderStars(n);
+    showToast(`⭐ ${n} من 5`);
+  }
+}
+
+function nextVocab() {
+  vocabIndex = (vocabIndex + 1) % vocabList.length;
+  renderVocab();
+}
+
+function checkWrite(input) {
+  if(!vocabList[vocabIndex]) return;
+  const target = vocabList[vocabIndex].german.toLowerCase();
+  const val = input.value.toLowerCase().trim();
+  if(val === target) {
+    input.className = 'write-input correct';
+    showToast('✅ صحيح!');
+    if(vocabList[vocabIndex].strength < 5) {
+      vocabList[vocabIndex].strength = Math.min(5, (vocabList[vocabIndex].strength||0) + 1);
+      DB.set('vocab', vocabList);
+      renderStars(vocabList[vocabIndex].strength);
+    }
+  } else if(val.length >= target.length) {
+    input.className = 'write-input wrong';
+  } else {
+    input.className = 'write-input';
+  }
+}
+
+function setMode(mode, btn) {
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  showToast(mode === 'cards' ? '🃏 وضع البطاقات' : '📋 وضع القائمة');
+}
+
+function playVocabAudio() { showToast('🔊 سيتم ربط الملف الصوتي بعد إضافته'); }
+
+// ===== AI (GEMINI) =====
+async function callGemini(prompt, messagesEl, inputEl, sendBtn) {
+  const key = SETTINGS.geminiKey;
+  if(!key) { showToast('⚠️ أضف Gemini API Key في الإعدادات أولاً'); return; }
+  const userMsg = inputEl.value.trim();
+  if(!userMsg) return;
+
+  addAIMessage(messagesEl, userMsg, 'user');
+  inputEl.value = '';
+  if(sendBtn) sendBtn.disabled = true;
+  const loadingEl = addAIMessage(messagesEl, '...', 'bot loading');
+
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({contents:[{parts:[{text: prompt + '\n\nسؤال المستخدم: ' + userMsg}]}]})
+    });
+    const data = await res.json();
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'لم أتمكن من الإجابة، حاول مرة أخرى.';
+    loadingEl.textContent = reply;
+    loadingEl.className = 'ai-msg bot';
+  } catch(e) {
+    loadingEl.textContent = 'خطأ في الاتصال بالذكاء الاصطناعي.';
+  }
+  if(sendBtn) sendBtn.disabled = false;
+}
+
+function addAIMessage(container, text, type) {
+  const el = document.createElement('div');
+  el.className = 'ai-msg ' + type;
+  el.textContent = text;
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+  return el;
+}
+
+function askAI() {
+  const v = vocabList[vocabIndex];
+  if(!v) return;
+  document.getElementById('vocab-ai-input').value = `اشرح لي كلمة "${v.german}" وكيف أستخدمها`;
+  sendVocabAI();
+}
+
+function sendVocabAI() {
+  const v = vocabList[vocabIndex];
+  const context = v ? `أنت مساعد لتعلم اللغة الألمانية. الكلمة الحالية هي "${v.german}" وتعني "${v.arabic}". أجب بالعربية بشكل بسيط وواضح.` : 'أنت مساعد لتعلم اللغة الألمانية. أجب بالعربية.';
+  callGemini(context, document.getElementById('vocab-ai-messages'), document.getElementById('vocab-ai-input'), document.getElementById('vocab-ai-send'));
+}
+
+function sendGrammarAI() {
+  const context = 'أنت مساعد لتعلم قواعد اللغة الألمانية. أجب بالعربية بشكل واضح مع أمثلة.';
+  callGemini(context, document.getElementById('grammar-ai-messages'), document.getElementById('grammar-ai-input'), null);
+}
+
+function sendReadingAI() {
+  const context = 'أنت مساعد لتعلم اللغة الألمانية. ساعد الطالب في فهم النصوص الألمانية. أجب بالعربية.';
+  callGemini(context, document.getElementById('reading-ai-messages'), document.getElementById('reading-ai-input'), null);
+}
+
+// ===== GRAMMAR =====
+function setGrammarTab(tab, btn) {
+  document.querySelectorAll('.grammar-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['explain','examples','exercise','challenge'].forEach(t => {
+    const el = document.getElementById('grammar-' + t);
+    if(el) el.style.display = t === tab ? 'block' : 'none';
+  });
+}
+
+let timerRunning = false;
+function startTimer() {
+  if(timerRunning) return;
+  timerRunning = true;
+  timerSeconds = 60;
+  document.getElementById('timer-score').textContent = '';
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    document.getElementById('timer-display').textContent = timerSeconds;
+    if(timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timer-score').textContent = '⏱️ انتهى الوقت! أحسنت 🎉';
+      showToast('⏱️ انتهى التحدي!');
+    }
+  }, 1000);
+  showToast('⏱️ بدأ التحدي!');
+}
+
+// ===== READING =====
+function setReadMode(mode, btn) {
+  document.querySelectorAll('.read-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const msgs = {focus:'🎯 وضع القراءة المركزة',audio:'🎧 القراءة مع الصوت',notes:'✏️ وضع الملاحظات'};
+  showToast(msgs[mode]);
+}
+
+function showWordMeaning(word, meaning) {
+  const tip = document.getElementById('word-tooltip');
+  tip.textContent = `${word} = ${meaning}`;
+  tip.className = 'word-tooltip show';
+  setTimeout(() => tip.className = 'word-tooltip', 3000);
+}
+
+function readingExercise(type) {
+  const msgs = {fill:'📝 تمرين ملء الفراغات — أضف نص الدرس أولاً',questions:'❓ أسئلة الفهم — أضف نص الدرس أولاً',reverse:'🔄 الترجمة العكسية — أضف نص الدرس أولاً',error:'🔍 اكتشف الخطأ — أضف نص الدرس أولاً'};
+  showToast(msgs[type]);
+}
+
+// ===== LISTENING =====
+function togglePlay() {
+  isPlaying = !isPlaying;
+  document.getElementById('play-btn').textContent = isPlaying ? '⏸' : '▶';
+  document.querySelectorAll('.wave-bar').forEach(b => {
+    if(isPlaying) b.classList.add('playing'); else b.classList.remove('playing');
+  });
+  showToast(isPlaying ? '▶ تشغيل' : '⏸ إيقاف');
+}
+function seekBack() { showToast('⏮ عودة 5 ثوانٍ'); }
+function seekForward() { showToast('⏭ تقدم 5 ثوانٍ'); }
+function setSpeed(btn, speed) {
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  showToast(`⚡ السرعة: ${speed}×`);
+}
+function toggleKaraoke() {
+  karaokeActive = !karaokeActive;
+  document.getElementById('karaoke-btn').textContent = karaokeActive ? 'إيقاف التتبع' : 'تفعيل التتبع';
+  showToast(karaokeActive ? '🎵 التتبع مفعّل' : '🎵 التتبع متوقف');
+}
+function listeningExercise(type) {
+  const msgs = {dictation:'📝 الإملاء الصوتي — أضف ملف صوتي أولاً',fill:'🎵 ملء الفراغات — أضف ملف صوتي أولاً',compare:'🔊 مقارنة النطق — أضف ملف صوتي أولاً',speed:'⚡ تحدي السرعة — أضف ملف صوتي أولاً'};
+  showToast(msgs[type]);
+}
+
+// ===== EXAM =====
+function startExam(practice) {
+  if(practice) showToast('📝 الامتحان التجريبي — يتطلب إضافة محتوى الدرس أولاً');
+  else showToast('🎯 الامتحان الرسمي — يتطلب إضافة محتوى الدرس أولاً');
+}
+function startDiagnostic() { showToast('🔍 الامتحان التشخيصي — يتطلب إضافة محتوى الدرس أولاً'); }
+
+// ===== LIBRARY =====
+function setLibTab(tab, btn) {
+  document.querySelectorAll('.lib-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const content = document.getElementById('lib-content');
+  const labels = {vocab:'المفردات',texts:'النصوص',grammar:'القواعد',audio:'الاستماع',writings:'كتاباتي'};
+  content.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text3)"><div style="font-size:36px;margin-bottom:8px">📂</div><div style="font-size:19px;font-weight:700;color:var(--text2);margin-bottom:4px">مكتبة ${labels[tab]}</div><div style="font-size:17px">أكمل دروسك لتملأ مكتبتك!</div></div>`;
+}
+
+// ===== SETTINGS =====
+function renderSettings() {
+  const geminiEl = document.getElementById('gemini-status');
+  const supabaseEl = document.getElementById('supabase-status');
+  if(geminiEl) geminiEl.textContent = CONFIG.GEMINI_KEY ? '✅ مفعّل' : '⚠️ غير محدد';
+  if(supabaseEl) supabaseEl.textContent = CONFIG.SUPABASE_KEY ? '✅ مفعّل' : '⚠️ غير محدد';
+}
+
+function editKey(type) {
+  const labels = {gemini:'Gemini API Key', supabase:'Supabase Anon Key'};
+  const val = prompt('أدخل ' + labels[type] + ':');
+  if(val && val.trim()) {
+    if(type === 'gemini') {
+      CONFIG.GEMINI_KEY = val.trim();
+      localStorage.setItem('dl_gemini_key', val.trim());
+    }
+    if(type === 'supabase') {
+      CONFIG.SUPABASE_KEY = val.trim();
+      localStorage.setItem('dl_supabase_key', val.trim());
+    }
+    renderSettings();
+    showToast('✅ تم الحفظ بأمان على جهازك');
+  }
+}
+
+function showUploadPanel() {
+  showToast('📁 ميزة رفع الملفات قادمة في التحديث القادم!');
+}
+
+function toggleSwitch(wrap) {
+  const track = wrap.querySelector('.toggle-track');
+  track.classList.toggle('on');
+}
+
+// ===== STATS =====
+function renderStats() {
+  const vocab = DB.get('vocab') || [];
+  const totalWords = vocab.filter(v => (v.strength||0) > 0).length;
+  document.getElementById('st-words').textContent = totalWords;
+  document.getElementById('st-time').textContent = '0h';
+  document.getElementById('st-acc').textContent = '0%';
+  document.getElementById('stat-words').textContent = totalWords;
+  document.getElementById('hdr-words').textContent = totalWords;
+
+  const skills = [
+    {label:'المفردات',pct:totalWords>0?Math.min(100,totalWords*5):0,color:'linear-gradient(90deg,#D4A017,#F0C040)'},
+    {label:'القواعد',pct:0,color:'linear-gradient(90deg,#1d4ed8,#60a5fa)'},
+    {label:'القراءة',pct:0,color:'linear-gradient(90deg,#16a34a,#22c55e)'},
+    {label:'الاستماع',pct:0,color:'linear-gradient(90deg,#7c3aed,#a78bfa)'},
+    {label:'الكتابة',pct:0,color:'linear-gradient(90deg,#c0392b,#ef4444)'},
+    {label:'المحادثة',pct:0,color:'linear-gradient(90deg,#0d9488,#14b8a6)'},
+  ];
+  document.getElementById('skills-bars').innerHTML = skills.map(s => `
+    <div class="skill-row">
+      <div class="skill-label">${s.label}</div>
+      <div class="skill-track"><div class="skill-fill" style="width:${s.pct}%;background:${s.color}"></div></div>
+      <div class="skill-pct">${s.pct}%</div>
+    </div>`).join('');
+
+  document.getElementById('achievements').innerHTML = totalWords > 0 ?
+    `<div style="text-align:center"><div style="font-size:36px">📚</div><div style="font-size:15px;color:var(--gold)">${totalWords} كلمة</div></div>` :
+    `<div style="font-size:18px;color:var(--text3)">ابدأ تعلمك لتحصل على إنجازات!</div>`;
+}
+
+// ===== LEVELS =====
+function renderLevels() {
+  const container = document.getElementById('lessons-a1');
+  container.innerHTML = '';
+  for(let i = 1; i <= 12; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'lesson-dot ' + (i === 1 ? 'active-lesson' : 'locked');
+    dot.textContent = i === 1 ? i : '🔒';
+    if(i === 1) dot.onclick = (e) => { e.stopPropagation(); showLesson(1); };
+    container.appendChild(dot);
+  }
+}
+
+function toggleLevel(id) {
+  const el = document.getElementById('lessons-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if(!el) return;
+  const open = el.style.display !== 'none';
+  el.style.display = open ? 'none' : 'flex';
+  if(arrow) arrow.textContent = open ? '▸' : '▾';
+}
+
+// ===== HOME =====
+function initHome() {
+  const vocab = DB.get('vocab') || [];
+  const needReview = vocab.filter(v => (v.strength||0) < 3).length;
+  document.getElementById('review-count').textContent = needReview > 0 ? `${needReview} كلمة تحتاج مراجعة` : 'كل المفردات ممتازة! ✅';
+  document.getElementById('reminder-count').textContent = needReview > 0 ? `${needReview} كلمة للمراجعة اليوم` : 'لا شيء اليوم ✅';
+  document.getElementById('readiness').textContent = '0% — ابدأ دروسك';
+  document.getElementById('hdr-words').textContent = vocab.filter(v=>(v.strength||0)>0).length;
+}
+
+// ===== ACTIVITY GRID =====
+function initActivityGrid() {
+  const grid = document.getElementById('activity-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  for(let i = 0; i < 21; i++) {
+    const el = document.createElement('div');
+    el.className = 'activity-day' + (i === 20 ? ' today' : '');
+    grid.appendChild(el);
+  }
+}
+
+// ===== WAVEFORM =====
+function initWaveform() {
+  const wf = document.getElementById('waveform');
+  if(!wf) return;
+  wf.innerHTML = '';
+  for(let i = 0; i < 28; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'wave-bar';
+    bar.style.cssText = `height:${Math.random()*24+4}px;animation-delay:${i*0.05}s`;
+    wf.appendChild(bar);
+  }
+}
+
+// ===== TOAST =====
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+
+function showDriveFiles() {
+  goToSection('drive');
+  const files = DB.get('drive_files');
+  if(files && files.a1) renderDriveFiles(files.a1);
+}
+
+function analyzeAllBooks() {
+  const files = DB.get('drive_files');
+  if(!files || !files.a1) {
+    showToast('⚠️ حمّل الملفات من Drive أولاً');
+    return;
+  }
+  const kursbuchId = files.a1['Netzwerk Neu A1 - Kursbuch.pdf'];
+  if(kursbuchId) {
+    DriveManager.analyzeBook(kursbuchId, 'Kursbuch A1');
+  } else {
+    showToast('⚠️ لم يتم العثور على كتاب الدرس');
+  }
+}
+
+// ===== SETUP SCREEN =====
+function saveSetup() {
+  const gemini = document.getElementById('setup-gemini').value.trim();
+  const supabase = document.getElementById('setup-supabase').value.trim();
+  
+  if(!gemini) {
+    document.getElementById('setup-gemini').style.borderColor = '#ef4444';
+    document.getElementById('setup-gemini').placeholder = 'مطلوب! أدخل مفتاح Gemini';
+    return;
+  }
+  
+  // حفظ المفاتيح
+  localStorage.setItem('dl_gemini_key', gemini);
+  if(supabase) localStorage.setItem('dl_supabase_key', supabase);
+  
+  // تحديث CONFIG
+  CONFIG.GEMINI_KEY = gemini;
+  if(supabase) CONFIG.SUPABASE_KEY = supabase;
+  
+  // إخفاء شاشة الإعداد
+  document.getElementById('setup-screen').style.display = 'none';
+  
+  showToast('✅ تم الحفظ! أهلاً بك في Deutsch einfach 🎉');
+}
+
+function checkSetup() {
+  // محاولة تحميل المفاتيح المحفوظة
+  const savedGemini = localStorage.getItem('dl_gemini_key');
+  const savedSupabase = localStorage.getItem('dl_supabase_key');
+  
+  if(savedGemini) {
+    CONFIG.GEMINI_KEY = savedGemini;
+    document.getElementById('setup-screen').style.display = 'none';
+  }
+  if(savedSupabase) CONFIG.SUPABASE_KEY = savedSupabase;
+  
+  // تحديث واجهة الإعدادات
+  if(savedGemini) {
+    const el = document.getElementById('gemini-status');
+    if(el) el.textContent = '✅ مفعّل';
+  }
+}
+
+// تشغيل عند التحميل
+window.addEventListener('load', () => {
+  checkSetup();
+  initActivityGrid();
+  initWaveform();
+  initHome();
+  renderLevels();
+  renderSettings();
+});
+
+</script>
+
+
+
+
+
+<script>
+// ===== PDF EXTRACTION SYSTEM =====
+
+// خريطة الكتاب الكاملة
+const BOOK_STRUCTURE = {
+  lessons: [
+    {number:1, title:"Guten Tag!", title_ar:"مرحباً!", from_page:8, to_page:17, wortschatz:"Zahlen von 1–20 | Länder und Sprachen", grammatik:"W-Frage | Aussagesatz | Verben und Personalpronomen"},
+    {number:2, title:"Freunde, Kollegen und ich", title_ar:"الأصدقاء والزملاء وأنا", from_page:18, to_page:27, wortschatz:"Hobbys | Wochentage | Zahlen ab 20 | Berufe", grammatik:"unregelmäßige Verben | Ja-/Nein-Frage | bestimmter Artikel | Nomen: Singular und Plural"},
+    {number:3, title:"In Hamburg", title_ar:"في هامبورغ", from_page:28, to_page:37, wortschatz:"Plätze und Gebäude | Verkehrsmittel | Richtungen | Monate und Jahreszeiten", grammatik:"unbestimmter Artikel | Negationsartikel | Imperativ mit Sie | Adjektiv mit sein"},
+    {number:4, title:"Guten Appetit!", title_ar:"بالهناء والشفاء!", from_page:44, to_page:53, wortschatz:"Mahlzeiten | Lebensmittel | Getränke | Geschäfte", grammatik:"Akkusativ | Verben mit Akkusativ | Verben mögen und möchten"},
+    {number:5, title:"Alltag und Familie", title_ar:"الحياة اليومية والعائلة", from_page:54, to_page:63, wortschatz:"Tagesablauf | Uhrzeiten | Familie", grammatik:"Zeitangaben | Possessivartikel | Modalverben müssen, können, wollen"},
+    {number:6, title:"Zeit mit Freunden", title_ar:"وقت مع الأصدقاء", from_page:64, to_page:73, wortschatz:"Ordinalzahlen | Freizeitaktivitäten | Essen und Getränke", grammatik:"Datumsangaben | trennbare Verben | Personalpronomen im Akkusativ"},
+    {number:7, title:"Arbeitsalltag", title_ar:"يوم العمل", from_page:80, to_page:89, wortschatz:"Büroalltag | Ortsangaben | Bank | Medien", grammatik:"Sätze verbinden: und, oder, aber | Artikel im Dativ | Präposition mit + Dativ"},
+    {number:8, title:"Fit und gesund", title_ar:"بصحة وعافية", from_page:90, to_page:99, wortschatz:"Körperteile | Krankheiten | Medikamente", grammatik:"Imperativ mit du, ihr und Sie | Modalverben sollen, müssen, dürfen"},
+    {number:9, title:"Meine Wohnung", title_ar:"شقتي", from_page:100, to_page:109, wortschatz:"Zimmer | Möbel und Geräte | Farben | Wohnformen", grammatik:"sein + Adjektiv | Präposition in + Akkusativ | Wechselpräpositionen"},
+    {number:10, title:"Reisen und Mobilität", title_ar:"السفر والتنقل", from_page:112, to_page:121, wortschatz:"Verkehrsmittel | Reisen | Hotel", grammatik:"Wechselpräpositionen mit Akkusativ | Komparativ | Superlativ"},
+    {number:11, title:"Einkaufen und Mode", title_ar:"التسوق والموضة", from_page:122, to_page:131, wortschatz:"Kleidung | Farben | Einkaufen", grammatik:"Adjektive im Akkusativ | Possessivartikel im Akkusativ"},
+    {number:12, title:"Rückblick", title_ar:"مراجعة شاملة", from_page:132, to_page:141, wortschatz:"Wiederholung aller Themen", grammatik:"Wiederholung aller Grammatikthemen"},
+  ]
+};
+
+// ===== PDF TO IMAGES (في المتصفح) =====
+let pdfDoc = null;
+let extractionProgress = 0;
+
+async function loadPDFFromFile(file) {
+  // تحميل مكتبة PDF.js إذا لم تكن محملة
+  if(!window.pdfjsLib) {
+    updateExtractionProgress(5, 'جارٍ تحميل مكتبة PDF...');
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+    await new Promise(r => setTimeout(r, 500));
+  }
+  
+  if(!window.pdfjsLib) throw new Error('فشل تحميل مكتبة PDF.js');
+  
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  
+  updateExtractionProgress(10, 'جارٍ قراءة الملف...');
+  const arrayBuffer = await file.arrayBuffer();
+  const loadingTask = pdfjsLib.getDocument({data: arrayBuffer});
+  pdfDoc = await loadingTask.promise;
+  return pdfDoc.numPages;
+}
+
+async function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+// تحويل صفحة PDF لصورة Base64
+async function pageToBase64(pageNum, scale = 1.2) {
+  try {
+    const page = await pdfDoc.getPage(pageNum);
+    const viewport = page.getViewport({scale});
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    
+    // خلفية بيضاء
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    await page.render({
+      canvasContext: ctx,
+      viewport,
+      background: 'white'
+    }).promise;
+    
+    return canvas.toDataURL('image/jpeg', 0.80).split(',')[1];
+  } catch(e) {
+    console.error('خطأ في تحويل صفحة ' + pageNum, e);
+    throw e;
+  }
+}
+
+// ===== GEMINI VISION EXTRACTION =====
+async function extractLessonWithGemini(lessonNum, pagesBase64) {
+  const key = CONFIG.GEMINI_KEY;
+  if(!key) throw new Error('Gemini API Key مفقود');
+  
+  const lesson = BOOK_STRUCTURE.lessons.find(l => l.number === lessonNum);
+  
+  const prompt = `أنت خبير في تحليل كتب تعلم اللغة الألمانية.
+هذه صفحات من Lektion ${lessonNum}: "${lesson.title}" من كتاب Netzwerk Neu A1.
+
+استخلص المحتوى التالي بدقة تامة بدون حذف أي نص أو جملة:
+
+1. **المفردات (Wortschatz)**: كل كلمة ألمانية جديدة مع:
+   - الكلمة الألمانية كاملة مع المقال (der/die/das)
+   - الترجمة العربية
+   - جملة مثال من النص بالضبط
+
+2. **القواعد (Grammatik)**: كل قاعدة نحوية مع:
+   - اسم القاعدة
+   - الشرح الكامل
+   - جدول التصريف إن وجد
+   - أمثلة من النص بالضبط
+
+3. **نصوص القراءة (Lesen)**: كل نص قراءة كاملاً بدون حذف أي جملة
+
+4. **تمارين القراءة**: كل تمارين القراءة كاملة
+
+5. **الحوارات (Hören/Sprechen)**: كل نصوص الحوارات والاستماع كاملة
+
+6. **تمارين الكتابة (Schreiben)**: كل تمارين الكتابة كاملة
+
+7. **تمارين القواعد**: كل تمارين القواعد كاملة
+
+أجب بـ JSON فقط بهذا الشكل بدون أي نص إضافي:
+{
+  "lesson_number": ${lessonNum},
+  "title": "${lesson.title}",
+  "title_ar": "${lesson.title_ar}",
+  "vocabulary": [
+    {"german": "der Name", "article": "der", "arabic": "الاسم", "sentence_de": "Wie ist Ihr Name?", "sentence_ar": "ما اسمك؟"}
+  ],
+  "grammar": [
+    {"title": "W-Frage", "title_ar": "أسئلة W", "explanation": "...", "examples": ["Wie heißen Sie?", "Wo wohnen Sie?"], "exercises": ["تمرين 1..."] }
+  ],
+  "reading_texts": [
+    {"title": "عنوان النص", "content": "النص كاملاً...", "exercises": ["سؤال 1...", "سؤال 2..."]}
+  ],
+  "dialogues": [
+    {"title": "عنوان الحوار", "content": "نص الحوار كاملاً...", "exercises": ["تمرين..."]}
+  ],
+  "writing_exercises": ["تمرين الكتابة 1...", "تمرين الكتابة 2..."],
+  "grammar_exercises": ["تمرين القواعد 1...", "تمرين القواعد 2..."]
+}`;
+
+  // بناء الطلب مع الصور
+  const parts = [{text: prompt}];
+  pagesBase64.forEach(b64 => {
+    parts.push({inline_data: {mime_type: "image/jpeg", data: b64}});
+  });
+
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${key}`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      contents: [{parts}],
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 8192
+      }
+    })
+  });
+
+  if(!res.ok) throw new Error(`Gemini API error: ${res.status}`);
+  
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  
+  // استخلاص JSON
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if(!jsonMatch) throw new Error('لم يتم استخلاص JSON');
+  
+  return JSON.parse(jsonMatch[0]);
+}
+
+// ===== MAIN EXTRACTION FUNCTION =====
+async function startFullExtraction() {
+  if(!uploadedBooks['kursbuch']) {
+    showToast('⚠️ ارفع كتاب الدرس (Kursbuch) أولاً');
+    return;
+  }
+  const file = uploadedBooks['kursbuch'];
+  showLoading(true);
+  updateExtractionProgress(0, 'جارٍ تحميل الكتاب...');
+  
+  try {
+    // تحميل PDF
+    const totalPages = await loadPDFFromFile(file);
+    updateExtractionProgress(5, `تم تحميل ${totalPages} صفحة`);
+    
+    const allLessons = [];
+    
+    // استخلاص كل درس
+    for(let i = 0; i < BOOK_STRUCTURE.lessons.length; i++) {
+      const lesson = BOOK_STRUCTURE.lessons[i];
+      const pct = 5 + ((i / BOOK_STRUCTURE.lessons.length) * 90);
+      updateExtractionProgress(pct, `جارٍ تحليل Lektion ${lesson.number}: ${lesson.title}...`);
+      
+      try {
+        // تحويل صفحات الدرس لصور
+        const pagesB64 = [];
+        for(let p = lesson.from_page; p <= Math.min(lesson.to_page, lesson.from_page + 4); p++) {
+          const b64 = await pageToBase64(p, 1.2);
+          pagesB64.push(b64);
+        }
+        
+        // تحليل بـ Gemini
+        const lessonData = await extractLessonWithGemini(lesson.number, pagesB64);
+        allLessons.push(lessonData);
+        
+        // حفظ فوري
+        DB.set(`lesson_${lesson.number}_data`, lessonData);
+        updateExtractionProgress(pct, `✅ Lektion ${lesson.number} مكتمل`);
+        
+      } catch(e) {
+        console.error(`خطأ في Lektion ${lesson.number}:`, e);
+        // حفظ بيانات أساسية في حالة الخطأ
+        allLessons.push({
+          lesson_number: lesson.number,
+          title: lesson.title,
+          title_ar: lesson.title_ar,
+          error: e.message
+        });
+      }
+      
+      // انتظار قصير بين الدروس لتجنب rate limit
+      await new Promise(r => setTimeout(r, 2000));
+    }
+    
+    // حفظ كل الدروس
+    DB.set('all_lessons_a1', allLessons);
+    DB.set('extraction_complete', true);
+    
+    updateExtractionProgress(100, '✅ تم استخلاص الكتاب بالكامل!');
+    showToast('🎉 تم! الكتاب جاهز للاستخدام');
+    
+    // تحديث واجهة الدروس
+    renderExtractedLessons(allLessons);
+    
+  } catch(e) {
+    showToast('❌ خطأ: ' + e.message);
+    console.error(e);
+  }
+  
+  showLoading(false);
+}
+
+// استخلاص درس واحد فقط (للاختبار)
+async function extractSingleLesson(lessonNum) {
+  const file = uploadedBooks['kursbuch'];
+  if(!file) {
+    showToast('⚠️ ارفع كتاب الدرس (Kursbuch) أولاً');
+    return;
+  }
+  showLoading(true);
+  updateExtractionProgress(0, `جارٍ تحليل Lektion ${lessonNum}...`);
+  
+  try {
+    const totalPages = await loadPDFFromFile(file);
+    updateExtractionProgress(20, 'تم تحميل PDF...');
+    
+    const lesson = BOOK_STRUCTURE.lessons.find(l => l.number === lessonNum);
+    
+    // تحويل الصفحات لصور
+    const pagesB64 = [];
+    for(let p = lesson.from_page; p <= Math.min(lesson.to_page, lesson.from_page + 4); p++) {
+      updateExtractionProgress(20 + (pagesB64.length * 10), `تحويل صفحة ${p}...`);
+      const b64 = await pageToBase64(p, 1.2);
+      pagesB64.push(b64);
+    }
+    
+    updateExtractionProgress(70, 'جارٍ التحليل بالذكاء الاصطناعي...');
+    const lessonData = await extractLessonWithGemini(lessonNum, pagesB64);
+    
+    // حفظ
+    DB.set(`lesson_${lessonNum}_data`, lessonData);
+    DB.set('all_lessons_a1', [lessonData]);
+    
+    updateExtractionProgress(100, `✅ Lektion ${lessonNum} مكتمل!`);
+    showToast(`✅ Lektion ${lessonNum}: ${lesson.title} جاهز!`);
+    
+    // عرض النتيجة
+    showExtractionResult(lessonData);
+    
+  } catch(e) {
+    const msg = e.message || 'خطأ غير معروف';
+    showToast('❌ ' + msg);
+    updateExtractionProgress(0, '❌ خطأ: ' + msg);
+    console.error('Extraction error:', e);
+  }
+  
+  showLoading(false);
+}
+
+// تحديث شريط التقدم
+function updateExtractionProgress(pct, msg) {
+  const bar = document.getElementById('extraction-bar');
+  const label = document.getElementById('extraction-label');
+  const pctEl = document.getElementById('extraction-pct');
+  if(bar) bar.style.width = pct + '%';
+  if(label) label.textContent = msg;
+  if(pctEl) pctEl.textContent = Math.round(pct) + '%';
+}
+
+// عرض نتيجة الاستخلاص
+function showExtractionResult(data) {
+  const resultEl = document.getElementById('extraction-result');
+  if(!resultEl) return;
+  
+  const vocabCount = data.vocabulary?.length || 0;
+  const grammarCount = data.grammar?.length || 0;
+  const textsCount = data.reading_texts?.length || 0;
+  const dialoguesCount = data.dialogues?.length || 0;
+  
+  resultEl.innerHTML = `
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--rad-lg);padding:20px;margin-top:16px">
+      <div style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px">
+        ✅ Lektion ${data.lesson_number}: ${data.title}
+      </div>
+      <div style="font-size:14px;color:var(--text3);margin-bottom:16px">${data.title_ar}</div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+        <div style="background:#f8f9fa;border-radius:var(--rad);padding:12px;text-align:center">
+          <div style="font-size:28px;font-weight:900;color:var(--gold)">${vocabCount}</div>
+          <div style="font-size:13px;color:var(--text3)">مفردة</div>
+        </div>
+        <div style="background:#f8f9fa;border-radius:var(--rad);padding:12px;text-align:center">
+          <div style="font-size:28px;font-weight:900;color:#2563eb">${grammarCount}</div>
+          <div style="font-size:13px;color:var(--text3)">قاعدة</div>
+        </div>
+        <div style="background:#f8f9fa;border-radius:var(--rad);padding:12px;text-align:center">
+          <div style="font-size:28px;font-weight:900;color:#16a34a">${textsCount}</div>
+          <div style="font-size:13px;color:var(--text3)">نص قراءة</div>
+        </div>
+        <div style="background:#f8f9fa;border-radius:var(--rad);padding:12px;text-align:center">
+          <div style="font-size:28px;font-weight:900;color:#7c3aed">${dialoguesCount}</div>
+          <div style="font-size:13px;color:var(--text3)">حوار</div>
+        </div>
+      </div>
+      
+      <button onclick="openLessonFromExtraction(${data.lesson_number})" 
+        style="width:100%;padding:14px;background:linear-gradient(135deg,#1a2840,#2c3e6a);color:#fff;border:none;border-radius:var(--rad);font-size:17px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer">
+        📖 افتح الدرس الآن
+      </button>
+    </div>
+  `;
+}
+
+// فتح درس من البيانات المستخلصة
+function openLessonFromExtraction(lessonNum) {
+  const data = DB.get(`lesson_${lessonNum}_data`);
+  if(!data) { showToast('⚠️ لم يتم استخلاص هذا الدرس بعد'); return; }
+  
+  // تحديث واجهة الدرس
+  const lesson = BOOK_STRUCTURE.lessons.find(l => l.number === lessonNum);
+  document.getElementById('lesson-title').textContent = `Lektion ${lessonNum}: ${lesson.title} — ${lesson.title_ar}`;
+  DB.set('current_lesson', data);
+  
+  // تحديث قسم المفردات
+  if(data.vocabulary) {
+    vocabList = data.vocabulary.map(v => ({
+      german: v.german,
+      arabic: v.arabic,
+      type: v.article ? `Nomen · ${v.article === 'der' ? 'männlich' : v.article === 'die' ? 'weiblich' : 'sächlich'}` : 'Verb/Adjektiv',
+      sentence: v.sentence_de || '',
+      sentenceAr: v.sentence_ar || '',
+      strength: 0
+    }));
+    DB.set('vocab', vocabList);
+  }
+  
+  showPage('page-lesson');
+  showToast(`📖 Lektion ${lessonNum} جاهز!`);
+}
+
+// عرض الدروس المستخلصة في قائمة المستويات
+function renderExtractedLessons(lessons) {
+  const container = document.getElementById('lessons-a1');
+  if(!container) return;
+  container.innerHTML = '';
+  
+  lessons.forEach(l => {
+    const dot = document.createElement('div');
+    const hasData = DB.get(`lesson_${l.lesson_number}_data`);
+    dot.className = `lesson-dot ${hasData ? 'done' : l.lesson_number === 1 ? 'active-lesson' : 'locked'}`;
+    dot.textContent = l.lesson_number;
+    dot.title = `${l.title} — ${l.title_ar}`;
+    dot.onclick = (e) => {
+      e.stopPropagation();
+      if(hasData) openLessonFromExtraction(l.lesson_number);
+      else showToast(`⚠️ استخلص Lektion ${l.lesson_number} أولاً`);
+    };
+    container.appendChild(dot);
+  });
+}
+
+// تحميل الدروس المحفوظة عند بدء التطبيق
+window.addEventListener('load', () => {
+  const savedLessons = DB.get('all_lessons_a1');
+  if(savedLessons) renderExtractedLessons(savedLessons);
+});
+
+// ===== BOOK UPLOAD SYSTEM =====
+const uploadedBooks = {};
+
+function handleBookUpload(input, bookKey, bookName) {
+  if(!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  uploadedBooks[bookKey] = file;
+  
+  // تحديث حالة الملف في الواجهة
+  const statusId = bookKey.replace(/_/g, '-') + '-status';
+  const statusEl = document.getElementById(statusId);
+  if(statusEl) {
+    statusEl.textContent = '✅ جاهز — ' + (file.size/1024/1024).toFixed(1) + ' MB';
+    statusEl.style.color = 'var(--success)';
+  }
+  
+  // تغيير لون الصف
+  const row = input.closest('div[style*="display:flex"]');
+  if(row) row.style.background = 'rgba(22,163,74,0.06)';
+  
+  showToast('✅ تم رفع ' + bookName + ' بنجاح');
+  
+  // تحديث شريط التقدم
+  const uploadedCount = Object.keys(uploadedBooks).length;
+  updateExtractionProgress(
+    (uploadedCount / 13) * 30,
+    uploadedCount + ' من 13 ملف مرفوع'
+  );
+}
+
+function getUploadedBook(bookKey) {
+  return uploadedBooks[bookKey] || null;
+}
+
+function checkUploadsReady() {
+  const required = ['kursbuch'];
+  for(const key of required) {
+    if(!uploadedBooks[key]) return false;
+  }
+  return true;
+}
+
+</script>
+</body>
+</html>
